@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Premium Notes Widget Mockup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(93, 128, 255, 0.14), transparent 31%),
+        radial-gradient(circle at 88% 18%, rgba(33, 185, 154, 0.12), transparent 26%),
+        linear-gradient(135deg, #f7f8fb 0%, #edf1f6 45%, #f7f3ee 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif;
+      color: #151923;
+    }
+
+    .stage {
+      width: 1120px;
+      height: 900px;
+      padding: 58px 64px;
+      display: grid;
+      gap: 22px;
+      align-content: start;
+    }
+
+    .topbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 720;
+      letter-spacing: 0;
+    }
+
+    .title span {
+      display: block;
+      margin-top: 8px;
+      color: #6d7480;
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toolbar button,
+    .icon-button {
+      height: 38px;
+      border: 1px solid rgba(27, 35, 49, 0.12);
+      background: rgba(255, 255, 255, 0.74);
+      color: #2d3441;
+      border-radius: 8px;
+      padding: 0 14px;
+      font: inherit;
+      font-size: 13px;
+      box-shadow: 0 10px 26px rgba(42, 52, 70, 0.08);
+    }
+
+    .toolbar .primary {
+      background: #151923;
+      color: #fff;
+      border-color: #151923;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      grid-template-rows: 156px 574px;
+      gap: 18px;
+    }
+
+    .overview,
+    .side-card,
+    .notes-widget {
+      border: 1px solid rgba(26, 33, 45, 0.1);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 22px 60px rgba(31, 41, 58, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(22px);
+      border-radius: 10px;
+    }
+
+    .overview {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 0.9fr 0.9fr 1.1fr;
+      align-items: center;
+      padding: 28px 32px;
+      gap: 26px;
+    }
+
+    .metric {
+      min-width: 0;
+      border-right: 1px solid rgba(28, 35, 47, 0.1);
+      padding-right: 24px;
+    }
+
+    .metric:last-child { border-right: 0; }
+    .metric small { color: #7a828e; font-size: 12px; }
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+    .metric p {
+      margin: 10px 0 0;
+      color: #596170;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .side-card {
+      padding: 22px;
+      display: grid;
+      align-content: start;
+      gap: 16px;
+    }
+
+    .side-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .side-head h2,
+    .widget-head h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 720;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(28, 35, 47, 0.08);
+      font-size: 13px;
+      color: #252c38;
+    }
+
+    .check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #adb5c2;
+    }
+    .task time { color: #8a929d; font-size: 12px; }
+
+    .notes-widget {
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 58px 1fr;
+    }
+
+    .widget-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px 0 22px;
+      border-bottom: 1px solid rgba(28, 35, 47, 0.08);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .head-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-button {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      box-shadow: none;
+      background: rgba(255,255,255,0.62);
+    }
+
+    .accent-button {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, #1e2633, #3b4657);
+      box-shadow: 0 12px 26px rgba(26, 35, 49, 0.22);
+    }
+
+    .notes-body {
+      display: grid;
+      grid-template-columns: 208px 1fr;
+      min-height: 0;
+    }
+
+    .note-list {
+      border-right: 1px solid rgba(28, 35, 47, 0.08);
+      background: rgba(246, 248, 251, 0.72);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .search {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 11px;
+      border: 1px solid rgba(27, 35, 49, 0.08);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.74);
+      color: #88919e;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .note-row {
+      position: relative;
+      padding: 12px 12px 12px 14px;
+      border-radius: 8px;
+      display: grid;
+      gap: 5px;
+      min-height: 78px;
+    }
+
+    .note-row.active {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(38, 48, 65, 0.1);
+    }
+
+    .note-row.active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 12px;
+      width: 3px;
+      border-radius: 99px;
+      background: #2f6fdd;
+    }
+
+    .note-row strong {
+      font-size: 13px;
+      font-weight: 680;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .note-row span {
+      color: #747d8b;
+      font-size: 12px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .note-row time {
+      color: #9aa2ae;
+      font-size: 11px;
+    }
+
+    .editor {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: 62px 42px 1fr 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.9));
+    }
+
+    .title-input {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      font-size: 21px;
+      font-weight: 740;
+      color: #171d28;
+      border-bottom: 1px solid rgba(28, 35, 47, 0.07);
+    }
+
+    .md-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(28, 35, 47, 0.07);
+      color: #596272;
+    }
+
+    .tool {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 680;
+    }
+
+    .tool.active {
+      color: #1d4f9f;
+      background: rgba(47, 111, 221, 0.1);
+    }
+
+    .divider {
+      width: 1px;
+      height: 18px;
+      margin: 0 5px;
+      background: rgba(28, 35, 47, 0.12);
+    }
+
+    .document {
+      padding: 22px 26px;
+      overflow: hidden;
+      color: #252c38;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .document h3 {
+      margin: 0 0 14px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .document p { margin: 0 0 14px; color: #465061; }
+    .document code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #eef3f8;
+      color: #265eac;
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 12px;
+    }
+
+    .quote {
+      margin: 16px 0;
+      padding: 12px 14px;
+      border-left: 3px solid #2f6fdd;
+      background: rgba(47, 111, 221, 0.07);
+      border-radius: 0 8px 8px 0;
+      color: #364254;
+    }
+
+    .checkline {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: #374153;
+      margin: 8px 0;
+    }
+
+    .box {
+      width: 15px;
+      height: 15px;
+      border-radius: 4px;
+      background: #2f6fdd;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      color: #8a929e;
+      font-size: 12px;
+      border-top: 1px solid rgba(28, 35, 47, 0.07);
+    }
+
+    .pill {
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: rgba(47, 111, 221, 0.09);
+      color: #255dad;
+      font-weight: 620;
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <header class="topbar">
+      <div class="title">
+        <h1>工作台</h1>
+        <span>高密度信息布局，适合持续使用的生产力界面</span>
+      </div>
+      <div class="toolbar">
+        <button>重置布局</button>
+        <button class="primary">添加小组件</button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="overview">
+        <div class="metric">
+          <small>当前时间</small>
+          <strong>21:48</strong>
+          <p>2026年6月7日 周日</p>
+        </div>
+        <div class="metric">
+          <small>今日待办</small>
+          <strong>7</strong>
+          <p>已完成 3 项，整体进度 43%</p>
+        </div>
+        <div class="metric">
+          <small>笔记更新</small>
+          <strong>12</strong>
+          <p>最近 7 天持续沉淀项目记录</p>
+        </div>
+        <div class="metric">
+          <small>今日提示</small>
+          <p>把想法写下来，再让结构慢慢浮出来。Markdown 负责秩序，你负责判断。</p>
+        </div>
+      </div>
+
+      <aside class="side-card">
+        <div class="side-head">
+          <h2>今天的任务</h2>
+          <span class="pill">43%</span>
+        </div>
+        <div class="task"><i class="check"></i><span>整理工作台笔记组件交互</span><time>09:30</time></div>
+        <div class="task"><i class="check"></i><span>补齐 Markdown 编辑器状态</span><time>11:00</time></div>
+        <div class="task"><i class="check"></i><span>检查移动端布局边界</span><time>15:00</time></div>
+        <div class="task"><i class="check"></i><span>准备下一版视觉规范</span><time>18:00</time></div>
+      </aside>
+
+      <section class="notes-widget">
+        <div class="widget-head">
+          <h2>笔记</h2>
+          <div class="head-actions">
+            <button class="icon-button">⌕</button>
+            <button class="icon-button">≡</button>
+            <button class="accent-button">＋</button>
+          </div>
+        </div>
+        <div class="notes-body">
+          <nav class="note-list">
+            <div class="search">⌕ 搜索笔记</div>
+            <article class="note-row active">
+              <strong>工作台 Markdown 组件</strong>
+              <span>用统一编辑器承载标题、列表、代码块和引用，保持轻量但完整。</span>
+              <time>今天 21:36</time>
+            </article>
+            <article class="note-row">
+              <strong>插件市场整理</strong>
+              <span>记录插件分组、启用状态和未来扩展方式。</span>
+              <time>昨天 18:20</time>
+            </article>
+            <article class="note-row">
+              <strong>六月计划</strong>
+              <span>将任务、日历和知识记录放进同一个节奏里。</span>
+              <time>6月5日</time>
+            </article>
+            <article class="note-row">
+              <strong>灵感暂存</strong>
+              <span>快速便签转正式笔记时自动生成摘要标题。</span>
+              <time>6月1日</time>
+            </article>
+          </nav>
+          <article class="editor">
+            <div class="title-input">工作台 Markdown 组件</div>
+            <div class="md-toolbar">
+              <span class="tool active">H</span>
+              <span class="tool">B</span>
+              <span class="tool">I</span>
+              <span class="tool">S</span>
+              <i class="divider"></i>
+              <span class="tool">•</span>
+              <span class="tool">1.</span>
+              <span class="tool">✓</span>
+              <i class="divider"></i>
+              <span class="tool">&lt;/&gt;</span>
+              <span class="tool">↗</span>
+              <span class="tool">▦</span>
+            </div>
+            <div class="document">
+              <h3>目标</h3>
+              <p>让工作台内的笔记不再只是临时输入框，而是能承载结构化内容的轻量知识面板。</p>
+              <div class="quote">组件需要保持安静、清晰、可持续使用，不抢走任务和日历的注意力。</div>
+              <div class="checkline"><span class="box">✓</span><span>支持标题、列表、引用和代码片段</span></div>
+              <div class="checkline"><span class="box">✓</span><span>编辑器高度跟随小组件尺寸，不破坏拖拽布局</span></div>
+              <p>代码片段示例：<code>notesStore.update(id, { content })</code></p>
+            </div>
+            <footer class="status">
+              <span>今天 21:36 更新 · 428 字</span>
+              <span>Markdown</span>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
