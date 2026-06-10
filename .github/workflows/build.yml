@@ -2,15 +2,8 @@ name: Build
 
 on:
   push:
-    branches:
-      - main
-      - master
     tags:
       - "v*"
-  pull_request:
-    branches:
-      - main
-      - master
   workflow_dispatch:
 
 permissions:
@@ -34,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Linux dependencies
         if: matrix.platform == 'ubuntu-22.04'
@@ -47,7 +40,7 @@ jobs:
             patchelf
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
