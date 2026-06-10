@@ -69,8 +69,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue"
-import { useNotesStore } from "../stores/notes"
-import { useTodoStore } from "../stores/todo"
+import { useNotesStore } from "../../stores/notes"
+import { useTodoStore } from "../../stores/todo"
 
 const todoStore = useTodoStore()
 const notesStore = useNotesStore()

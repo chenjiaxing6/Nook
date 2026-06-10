@@ -77,7 +77,7 @@ function previewStyle(theme: Theme) {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 32px 20px;
+  padding: 20px 24px 24px;
   gap: 20px;
   overflow-y: auto;
 }
@@ -85,17 +85,17 @@ function previewStyle(theme: Theme) {
 .settings-page::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 h1 {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 760;
   color: var(--text);
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
 }
 
 .settings-body {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  max-width: 720px;
+  max-width: 820px;
 }
 
 .settings-section {
@@ -119,7 +119,7 @@ h1 {
   justify-content: space-between;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 14px 18px;
   box-shadow: var(--card-shadow);
 }
@@ -156,15 +156,15 @@ h1 {
 /* theme grid */
 .theme-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
 .theme-card {
   position: relative;
   background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 0;
   cursor: pointer;
   overflow: hidden;
@@ -183,7 +183,7 @@ h1 {
   height: 80px;
   display: flex;
   overflow: hidden;
-  border-radius: 10px 10px 0 0;
+  border-radius: 8px 8px 0 0;
 }
 
 .preview-sidebar {
@@ -251,5 +251,11 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 860px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

@@ -113,12 +113,124 @@ watch(() => props.content, (val) => {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
 }
 
 .vditor-container .vditor-toolbar {
   border-bottom: 1px solid var(--border) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  background: var(--card-bg) !important;
+}
+
+.vditor-container .vditor-toolbar__item button {
+  color: var(--text-secondary) !important;
+  border-radius: 7px !important;
+}
+
+.vditor-container .vditor-toolbar__item button:hover {
+  background: var(--hover) !important;
+  color: var(--accent) !important;
+}
+
+.vditor-container .vditor-toolbar__divider {
+  border-left-color: var(--border) !important;
+}
+
+.vditor-container .vditor-content,
+.vditor-container .vditor-ir,
+.vditor-container .vditor-ir pre,
+.vditor-container .vditor-wysiwyg,
+.vditor-container .vditor-sv {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+.vditor-container .vditor-reset {
+  color: var(--text-secondary) !important;
+}
+
+.vditor-container .vditor-reset h1,
+.vditor-container .vditor-reset h2,
+.vditor-container .vditor-reset h3,
+.vditor-container .vditor-reset h4,
+.vditor-container .vditor-reset h5,
+.vditor-container .vditor-reset h6,
+.vditor-container .vditor-ir__node--expand {
+  color: var(--text) !important;
+}
+
+.vditor-container .vditor-reset a {
+  color: var(--accent) !important;
+}
+
+.vditor-container .vditor-reset blockquote {
+  border-left-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+  color: var(--text-secondary) !important;
+}
+
+.vditor-container .vditor-reset code:not(.hljs) {
+  background: var(--input-bg) !important;
+  color: var(--accent) !important;
+}
+
+.vditor-container .vditor-reset pre,
+.vditor-container .vditor-reset pre code,
+.vditor-container .vditor-reset .hljs {
+  background: var(--input-bg) !important;
+  color: var(--text-secondary) !important;
+}
+
+.vditor-container .vditor-reset table tr {
+  background: transparent !important;
+  border-top-color: var(--border) !important;
+}
+
+.vditor-container .vditor-reset table th,
+.vditor-container .vditor-reset table td {
+  border-color: var(--border) !important;
+}
+
+.vditor-container .vditor-reset table tr:nth-child(2n),
+.vditor-container .vditor-reset table th {
+  background: var(--input-bg) !important;
+}
+
+.vditor-container .vditor-ir__marker,
+.vditor-container .vditor-ir__node--expand .vditor-ir__marker {
+  color: var(--text-muted) !important;
+}
+
+.vditor-container .vditor-ir__preview {
+  color: var(--text) !important;
+}
+
+.vditor-container .vditor-ir__node--focus,
+.vditor-container .vditor-wysiwyg__block--current {
+  background: var(--hover) !important;
+}
+
+.vditor-container .vditor-outline,
+.vditor-container .vditor-hint,
+.vditor-container .vditor-panel,
+.vditor-container .vditor-menu,
+.vditor-container .vditor-toolbar__item--current,
+.vditor-container .vditor-toolbar__item--current button {
+  background: var(--card-bg) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border) !important;
+}
+
+.vditor-container textarea,
+.vditor-container input {
+  color: var(--text) !important;
+  background: var(--bg) !important;
+}
+
+.vditor-container ::selection {
+  background: var(--accent-light);
 }
 
 .toolbar-toggle {

@@ -293,7 +293,7 @@ const monthChartData = computed(() => {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 32px 20px;
+  padding: 20px 24px 24px;
   gap: 16px;
   overflow: hidden;
 }
@@ -303,16 +303,18 @@ const monthChartData = computed(() => {
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  padding: 4px 2px 2px;
 }
 .header-left { display: flex; align-items: center; gap: 12px; }
-h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+h1 { font-size: 30px; font-weight: 760; color: var(--text); letter-spacing: 0; }
 .total-badge {
-  font-size: 12px; font-weight: 500; color: var(--text-muted);
-  background: var(--input-bg); padding: 3px 10px; border-radius: 20px;
+  font-size: 12px; font-weight: 650; color: var(--text-muted);
+  background: var(--input-bg); padding: 6px 10px; border-radius: 8px;
+  border: 1px solid var(--border);
 }
 
 .view-tabs {
-  display: flex; background: var(--input-bg); border-radius: 10px; padding: 3px; gap: 2px;
+  display: flex; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; padding: 3px; gap: 2px;
 }
 .view-tabs button {
   padding: 5px 18px; border: none; border-radius: 7px; background: transparent;
@@ -320,7 +322,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
   cursor: pointer; transition: background 0.15s, color 0.15s;
 }
 .view-tabs button.active {
-  background: var(--card-bg); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  background: var(--card-bg); color: var(--accent); box-shadow: var(--card-shadow);
 }
 
 .content-area {
@@ -343,7 +345,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
 /* chart card */
 .chart-card {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 14px; box-shadow: var(--card-shadow);
+  border-radius: 8px; box-shadow: var(--card-shadow);
   padding: 14px 18px 12px; flex-shrink: 0;
 }
 .chart-title { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.3px; }
@@ -356,7 +358,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
 }
 .week-day-col {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: var(--card-shadow);
+  border-radius: 8px; box-shadow: var(--card-shadow);
   display: flex; flex-direction: column; overflow: hidden;
 }
 .week-day-header {
@@ -391,7 +393,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
 .month-groups::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .month-group {
   background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: var(--card-shadow); overflow: hidden;
+  border-radius: 8px; box-shadow: var(--card-shadow); overflow: hidden;
 }
 .group-header {
   display: flex; align-items: center; justify-content: space-between;

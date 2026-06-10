@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from "vue"
-import { getJsonValue, setStoredValue } from "../storage"
+import { getJsonValue, setStoredValue } from "../../storage"
 
 interface Preset {
   id: string

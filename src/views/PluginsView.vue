@@ -171,8 +171,8 @@ function toggleEnabled(id: string, enabled: boolean) {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 32px;
-  gap: 14px;
+  padding: 20px 24px 24px;
+  gap: 16px;
   overflow: hidden;
 }
 
@@ -185,9 +185,10 @@ function toggleEnabled(id: string, enabled: boolean) {
 }
 
 h1 {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 760;
   color: var(--text);
+  letter-spacing: 0;
 }
 
 .page-header p {
@@ -238,6 +239,7 @@ h1 {
   font: inherit;
   padding: 10px 12px;
   outline: none;
+  box-shadow: var(--card-shadow);
 }
 
 .toolbar input:focus {
@@ -365,6 +367,7 @@ h1 {
 .plugin-detail {
   padding: 18px;
   border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card-bg) 88%, var(--bg) 12%);
 }
 
 .detail-heading {
@@ -492,6 +495,7 @@ h1 {
 .preview-panel {
   min-height: 0;
   overflow: hidden;
+  background: color-mix(in srgb, var(--card-bg) 78%, var(--bg) 22%);
 }
 
 .preview-placeholder {
@@ -516,7 +520,17 @@ h1 {
 
 @media (max-width: 900px) {
   .plugins-page {
-    padding: 22px;
+    padding: 18px;
+  }
+
+  .page-header,
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .toolbar input {
+    width: 100%;
   }
 
   .plugins-layout {

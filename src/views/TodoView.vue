@@ -89,8 +89,8 @@ function handleAdd() {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 32px;
-  gap: 20px;
+  padding: 20px 24px 24px;
+  gap: 16px;
   overflow: hidden;
 }
 
@@ -98,23 +98,26 @@ function handleAdd() {
   display: flex;
   align-items: center;
   gap: 12px;
+  justify-content: space-between;
   flex-shrink: 0;
+  padding: 4px 2px 2px;
 }
 
 h1 {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 760;
   color: var(--text);
-  letter-spacing: -0.5px;
+  letter-spacing: 0;
 }
 
 .stats-badge {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 650;
   color: var(--text-muted);
   background: var(--input-bg);
-  padding: 3px 10px;
-  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
 .add-form {
@@ -130,7 +133,7 @@ h1 {
   gap: 10px;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 0 14px;
   box-shadow: var(--card-shadow);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -162,7 +165,7 @@ h1 {
   background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
@@ -194,7 +197,7 @@ h1 {
   color: var(--text-muted);
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  padding: 0 4px;
+  padding: 0 2px;
 }
 .done-label { opacity: 0.6; }
 
@@ -206,7 +209,7 @@ h1 {
   gap: 12px;
   padding: 12px 14px;
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   box-shadow: var(--card-shadow);
   transition: background 0.12s;
@@ -261,6 +264,10 @@ h1 {
   gap: 8px;
   color: var(--text-muted);
   padding: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
 }
 .empty-icon { font-size: 32px; opacity: 0.3; margin-bottom: 4px; }
 .empty-state p { font-size: 15px; font-weight: 500; color: var(--text-secondary); }

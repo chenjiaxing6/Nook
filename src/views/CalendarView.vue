@@ -173,8 +173,8 @@ function goToday() { year.value = now.getFullYear(); month.value = now.getMonth(
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 28px 32px 20px;
-  gap: 20px;
+  padding: 20px 24px 24px;
+  gap: 16px;
   overflow: hidden;
 }
 
@@ -183,22 +183,24 @@ function goToday() { year.value = now.getFullYear(); month.value = now.getMonth(
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  padding: 4px 2px 2px;
 }
 
 .header-left { display: flex; align-items: center; gap: 12px; }
 
-h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+h1 { font-size: 30px; font-weight: 760; color: var(--text); letter-spacing: 0; }
 
 .today-badge {
   font-size: 12px; font-weight: 500; color: var(--accent);
-  background: var(--accent-light); padding: 3px 10px; border-radius: 20px;
+  background: var(--accent-light); padding: 6px 10px; border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border) 80%);
   cursor: pointer; transition: opacity 0.15s;
 }
 .today-badge:hover { opacity: 0.75; }
 
 .nav-btns { display: flex; gap: 6px; }
 .nav-btns button {
-  width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+  width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
   background: var(--card-bg); color: var(--text-secondary); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.15s, border-color 0.15s; box-shadow: var(--card-shadow);
@@ -217,7 +219,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
 .cal-left {
   flex: 1;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border);
   overflow: hidden;
@@ -314,7 +316,7 @@ h1 { font-size: 26px; font-weight: 700; color: var(--text); letter-spacing: -0.5
   width: 220px;
   flex-shrink: 0;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: var(--card-shadow);
   border: 1px solid var(--border);
   display: flex;

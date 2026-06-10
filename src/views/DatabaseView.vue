@@ -214,8 +214,8 @@ async function runExecute() {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 28px 32px;
+  gap: 16px;
+  padding: 20px 24px 24px;
   overflow: hidden;
   color: var(--text);
 }
@@ -231,7 +231,9 @@ async function runExecute() {
 }
 
 h1 {
-  font-size: 26px;
+  font-size: 30px;
+  font-weight: 760;
+  letter-spacing: 0;
 }
 
 .page-header p,
@@ -250,6 +252,7 @@ button {
   font: inherit;
   font-weight: 600;
   padding: 8px 12px;
+  box-shadow: var(--card-shadow);
 }
 
 button:hover {
@@ -266,7 +269,7 @@ button:disabled {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 14px;
 }
 
@@ -282,7 +285,7 @@ button:disabled {
 
 .table-list {
   overflow: auto;
-  padding: 8px;
+  padding: 10px;
 }
 
 .table-list button {
@@ -293,6 +296,7 @@ button:disabled {
   gap: 3px;
   margin-bottom: 6px;
   text-align: left;
+  box-shadow: none;
 }
 
 .table-list button.active {
@@ -315,8 +319,9 @@ button:disabled {
 
 .panel-header,
 .console-header {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card-bg) 88%, var(--bg) 12%);
 }
 
 .data-table-wrap,
@@ -383,6 +388,7 @@ td textarea {
   border-inline: 0;
   border-bottom: 0;
   overflow: hidden;
+  box-shadow: none;
 }
 
 .sql-console textarea {
@@ -399,6 +405,8 @@ td textarea {
   display: grid;
   place-items: center;
   background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 24px;
 }
 

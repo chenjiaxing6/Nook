@@ -196,15 +196,22 @@
         <div v-else-if="widget.id === 'notes'" class="card notes-card">
         <div class="card-header">
           <h2>笔记</h2>
-          <button class="new-btn" @click="notesStore.create()">
+          <button class="new-btn" @click="notesStore.create()" title="新建笔记">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           </button>
         </div>
 
         <div class="notes-body">
           <div class="notes-list">
+            <div class="note-search">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <circle cx="5.7" cy="5.7" r="3.7" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M8.6 8.6l2.4 2.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <input v-model="noteSearch" placeholder="搜索笔记" />
+            </div>
             <div
-              v-for="note in notesStore.notes"
+              v-for="note in filteredNotes"
               :key="note.id"
               class="note-item"
               :class="{ active: note.id === notesStore.activeId }"
@@ -219,6 +226,7 @@
               </button>
             </div>
             <div v-if="notesStore.notes.length === 0" class="empty-hint">点击 + 新建笔记</div>
+            <div v-else-if="filteredNotes.length === 0" class="empty-hint">没有匹配的笔记</div>
           </div>
 
           <div class="note-editor" v-if="currentNote">
@@ -230,6 +238,10 @@
             />
             <div class="note-markdown-editor">
               <VditorEditor :key="currentNote.id" :content="currentNote.content" @change="onNoteContentChange" />
+            </div>
+            <div class="note-editor-footer">
+              <span>{{ formatTime(currentNote.updatedAt) }} 更新 · {{ wordCount(currentNote.content) }} 字</span>
+              <span>Markdown</span>
             </div>
           </div>
           <div class="note-editor-empty" v-else-if="notesStore.notes.length > 0">
@@ -721,6 +733,14 @@ function handleAdd() {
 const notesStore = useNotesStore()
 const currentNote = computed(() => notesStore.active())
 const quickNoteText = ref("")
+const noteSearch = ref("")
+const filteredNotes = computed(() => {
+  const keyword = noteSearch.value.trim().toLowerCase()
+  if (!keyword) return notesStore.notes
+  return notesStore.notes.filter((note) => {
+    return `${note.title} ${note.content}`.toLowerCase().includes(keyword)
+  })
+})
 
 function notePreview(content: string) {
   return content.replace(/\n/g, " ").slice(0, 40) || "暂无内容"
@@ -751,6 +771,10 @@ function formatTime(timestamp?: number) {
     hour: "2-digit",
     minute: "2-digit",
   })
+}
+
+function wordCount(content: string) {
+  return content.replace(/\s/g, "").length
 }
 </script>
 
@@ -1718,6 +1742,375 @@ function formatTime(timestamp?: number) {
   text-align: center;
 }
 
+/* ── Premium dashboard finish ── */
+.dashboard {
+  --dash-bg:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 30%),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--success) 14%, transparent), transparent 28%),
+    linear-gradient(135deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, var(--accent) 12%) 48%, color-mix(in srgb, var(--bg) 92%, var(--warning) 8%) 100%);
+  --dash-card: color-mix(in srgb, var(--card-bg) 88%, transparent);
+  --dash-card-strong: color-mix(in srgb, var(--card-bg) 96%, var(--bg) 4%);
+  --dash-panel: color-mix(in srgb, var(--input-bg) 54%, var(--card-bg) 46%);
+  --dash-field: color-mix(in srgb, var(--card-bg) 82%, transparent);
+  --dash-border: color-mix(in srgb, var(--border) 82%, var(--text) 18%);
+  --dash-soft-border: color-mix(in srgb, var(--border) 72%, transparent);
+  --dash-shadow: 0 22px 60px color-mix(in srgb, var(--text) 12%, transparent), inset 0 1px 0 color-mix(in srgb, var(--card-bg) 88%, white 12%);
+  --dash-button-bg: color-mix(in srgb, var(--card-bg) 82%, transparent);
+  --dash-button-primary: var(--text);
+  --dash-button-primary-hover: color-mix(in srgb, var(--text) 86%, var(--accent) 14%);
+  --dash-subtle-text: color-mix(in srgb, var(--text-secondary) 72%, var(--text-muted) 28%);
+  --dash-muted-text: color-mix(in srgb, var(--text-muted) 72%, var(--text-secondary) 28%);
+  --dash-active-note: color-mix(in srgb, var(--card-bg) 96%, var(--accent-light) 4%);
+  --dash-note-hover: color-mix(in srgb, var(--card-bg) 74%, transparent);
+  --dash-editor-bg: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 78%, transparent), color-mix(in srgb, var(--card-bg) 94%, var(--bg) 6%));
+  --dash-toolbar-bg: color-mix(in srgb, var(--card-bg) 58%, transparent);
+  --dash-code-bg: color-mix(in srgb, var(--accent-light) 46%, var(--card-bg) 54%);
+  padding: 26px 30px 30px;
+  background: var(--dash-bg);
+}
+
+:global(html[data-theme-mode="dark"]) .dashboard {
+  --dash-bg:
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 32%),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--success) 10%, transparent), transparent 30%),
+    linear-gradient(135deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, var(--accent) 12%) 52%, color-mix(in srgb, var(--bg) 92%, var(--warning) 8%) 100%);
+  --dash-card: color-mix(in srgb, var(--card-bg) 88%, transparent);
+  --dash-card-strong: color-mix(in srgb, var(--card-bg) 92%, var(--text) 8%);
+  --dash-panel: color-mix(in srgb, var(--input-bg) 60%, var(--card-bg) 40%);
+  --dash-field: color-mix(in srgb, var(--card-bg) 76%, transparent);
+  --dash-border: color-mix(in srgb, var(--border) 88%, var(--text) 12%);
+  --dash-soft-border: color-mix(in srgb, var(--border) 78%, transparent);
+  --dash-shadow: 0 22px 60px rgba(0, 0, 0, 0.38), inset 0 1px 0 color-mix(in srgb, var(--text) 8%, transparent);
+  --dash-button-bg: color-mix(in srgb, var(--card-bg) 78%, transparent);
+  --dash-button-primary: color-mix(in srgb, var(--text) 88%, var(--accent) 12%);
+  --dash-button-primary-hover: color-mix(in srgb, var(--text) 80%, var(--accent) 20%);
+  --dash-active-note: color-mix(in srgb, var(--card-bg) 86%, var(--accent-light) 14%);
+  --dash-note-hover: color-mix(in srgb, var(--hover) 54%, var(--card-bg) 46%);
+  --dash-editor-bg: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 86%, transparent), color-mix(in srgb, var(--card-bg) 94%, var(--bg) 6%));
+  --dash-toolbar-bg: color-mix(in srgb, var(--card-bg) 70%, transparent);
+  --dash-code-bg: color-mix(in srgb, var(--accent-light) 52%, var(--card-bg) 48%);
+}
+
+.layout-toolbar {
+  margin-bottom: 22px;
+  padding: 4px 2px;
+}
+
+.layout-toolbar h1 {
+  color: var(--text);
+  font-size: 30px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.layout-toolbar span {
+  color: var(--dash-subtle-text);
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.layout-toolbar button {
+  min-height: 38px;
+  border-color: var(--dash-border);
+  border-radius: 8px;
+  background: var(--dash-button-bg);
+  color: var(--text-secondary);
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--text) 8%, transparent);
+  transition: transform 0.15s, border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.layout-toolbar button:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border) 68%);
+  background: var(--dash-card-strong);
+  color: var(--accent);
+}
+
+.layout-toolbar .primary-toolbar-btn {
+  border-color: var(--dash-button-primary);
+  background: var(--dash-button-primary);
+  color: #fff;
+}
+
+.layout-toolbar .primary-toolbar-btn:hover {
+  background: var(--dash-button-primary-hover);
+  border-color: var(--dash-button-primary-hover);
+}
+
+.widget-grid {
+  gap: 18px;
+  grid-auto-rows: 94px;
+  min-height: calc(100% - 82px);
+}
+
+.card,
+.overview-bar,
+.widget-picker,
+.empty-dashboard {
+  border-color: var(--dash-border);
+  border-radius: 10px;
+  background: var(--dash-card);
+  box-shadow: var(--dash-shadow);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.card-header {
+  min-height: 58px;
+  padding: 0 84px 0 22px;
+  border-bottom-color: var(--dash-soft-border);
+  background: var(--dash-toolbar-bg);
+}
+
+.card-header h2 {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 740;
+  letter-spacing: 0;
+}
+
+.drag-handle,
+.remove-widget-btn {
+  border-color: var(--dash-border);
+  background: var(--dash-button-bg);
+  color: var(--dash-muted-text);
+  box-shadow: none;
+}
+
+.overview-bar {
+  min-height: 94px;
+  padding: 0 88px 0 28px;
+}
+
+.ov-divider {
+  height: 46px;
+  background: var(--dash-soft-border);
+  margin: 0 28px;
+}
+
+.ov-clock {
+  color: var(--text);
+  font-size: 30px;
+  font-weight: 760;
+}
+
+.ov-date,
+.ov-stat-unit,
+.ov-stat-sub,
+.ov-holiday-days,
+.ov-quote span {
+  color: var(--dash-subtle-text);
+}
+
+.ov-stat-value {
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 760;
+}
+
+.ov-progress-track {
+  background: var(--input-bg);
+}
+
+.ov-progress-fill {
+  background: var(--accent);
+}
+
+.new-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--dash-button-primary), var(--dash-button-primary-hover));
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--text) 16%, transparent);
+}
+
+.new-btn:hover {
+  background: linear-gradient(135deg, var(--dash-button-primary-hover), var(--accent));
+}
+
+.notes-card {
+  background: var(--dash-card);
+}
+
+.notes-body {
+  grid-template-columns: minmax(188px, 0.34fr) minmax(0, 1fr);
+}
+
+.notes-list {
+  padding: 10px;
+  border-right-color: var(--dash-soft-border);
+  background: var(--dash-panel);
+}
+
+.note-search {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 0 11px;
+  border: 1px solid var(--dash-soft-border);
+  border-radius: 8px;
+  background: var(--dash-field);
+  color: var(--dash-muted-text);
+}
+
+.note-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+}
+
+.note-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.note-item {
+  min-height: 78px;
+  padding: 12px 34px 12px 14px;
+  border-bottom: 0;
+  border-radius: 8px;
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.note-item:hover {
+  background: var(--dash-note-hover);
+}
+
+.note-item.active {
+  background: var(--dash-active-note);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--text) 10%, transparent);
+}
+
+.note-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 99px;
+  background: var(--accent);
+}
+
+.note-title {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 720;
+  margin: 0;
+}
+
+.note-item.active .note-title {
+  color: var(--text);
+}
+
+.note-preview {
+  color: var(--dash-subtle-text);
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.note-del-btn {
+  top: 14px;
+  right: 8px;
+  transform: none;
+  background: var(--dash-field);
+}
+
+.note-editor {
+  background: var(--dash-editor-bg);
+}
+
+.note-title-input {
+  min-height: 62px;
+  padding: 0 24px;
+  border-bottom-color: var(--dash-soft-border);
+  color: var(--text);
+  font-size: 21px;
+  font-weight: 760;
+}
+
+.note-markdown-editor {
+  background: transparent;
+}
+
+.note-markdown-editor :deep(.vditor) {
+  background: transparent !important;
+}
+
+.note-markdown-editor :deep(.vditor-toolbar) {
+  min-height: 42px !important;
+  padding: 6px 54px 6px 18px !important;
+  border-bottom-color: var(--dash-soft-border) !important;
+  background: var(--dash-toolbar-bg) !important;
+}
+
+.note-markdown-editor :deep(.vditor-toolbar__item button) {
+  border-radius: 7px !important;
+  color: var(--text-secondary) !important;
+}
+
+.note-markdown-editor :deep(.vditor-toolbar__item button:hover) {
+  background: var(--accent-light) !important;
+  color: var(--accent) !important;
+}
+
+.note-markdown-editor :deep(.vditor-ir) {
+  background: transparent !important;
+}
+
+.note-markdown-editor :deep(.vditor-reset) {
+  padding: 22px 26px !important;
+  color: var(--text-secondary) !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+}
+
+.note-markdown-editor :deep(.vditor-reset h1),
+.note-markdown-editor :deep(.vditor-reset h2),
+.note-markdown-editor :deep(.vditor-reset h3) {
+  color: var(--text) !important;
+  letter-spacing: 0 !important;
+}
+
+.note-markdown-editor :deep(.vditor-reset blockquote) {
+  border-left: 3px solid var(--accent) !important;
+  background: var(--accent-light) !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.note-markdown-editor :deep(.vditor-reset code:not(.hljs)) {
+  border-radius: 5px !important;
+  background: var(--dash-code-bg) !important;
+  color: var(--accent) !important;
+}
+
+.note-editor-footer {
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px;
+  border-top: 1px solid var(--dash-soft-border);
+  color: var(--dash-muted-text);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 1120px) {
   .widget-shell {
     grid-column: span 12 !important;
@@ -1787,7 +2180,17 @@ function formatTime(timestamp?: number) {
   .notes-list {
     border-right: 0;
     border-bottom: 1px solid var(--border);
-    max-height: 160px;
+    max-height: 190px;
+  }
+
+  .note-title-input {
+    min-height: 54px;
+    font-size: 17px;
+    padding: 0 16px;
+  }
+
+  .note-editor-footer {
+    padding: 0 16px;
   }
 }
 </style>
