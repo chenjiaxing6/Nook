@@ -142,7 +142,7 @@ npm run tauri     # 调用 Tauri CLI
 - 推送 `v*` tag
 - 手动触发 workflow
 
-普通 push 和 PR 会执行构建校验。推送 tag 时会创建 GitHub Release 草稿，并上传 macOS、Windows、Linux 的 Tauri 构建产物。
+推送 tag 时会自动创建 GitHub Release，并上传 macOS、Windows、Linux 的 Tauri 构建产物。也可以在 GitHub Actions 页面手动触发构建。
 
 ## 开发备注
 
